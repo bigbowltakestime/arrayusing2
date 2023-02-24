@@ -4,9 +4,244 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
   <title>Document</title>
+  <style>
+    body{
+      width: 100px;
+      margin: auto;
+      height: 200vh;
+    }
+    .top{
+      width: 100%;
+      height: 450px;
+
+    }
+    .nametag{
+      height: 35px;
+      width: 100px;
+      background-color: rgb(64, 133, 197);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border:3px solid rgb(223, 221, 68);
+      border-radius: 10px;
+      font-family: "Jua";
+      font-weight: 900;
+      font-size: 15px;
+    }
+  </style>
+  <script>
+    let pokeName = [
+      "이상해씨",
+      "이상해풀",
+      "이상해꽃",
+      "파이리",
+      "리자드",
+      "리자몽",
+      "꼬부기",
+      "어니부기",
+      "거북왕",
+      "캐터피",
+      "단데기",
+      "버터플",
+      "뿔충이",
+      "딱충이",
+      "독침붕",
+      "구구",
+      "피죤",
+      "피죤투",
+      "꼬렛",
+      "레트라",
+      "깨비참",
+      "깨비드릴조",
+      "아보",
+      "아보크",
+      "피카츄",
+      "라이츄",
+      "모래두지",
+      "고지",
+      "니드런♀",
+      "니드리나",
+      "니드퀸",
+      "니드런♂",
+      "니드리노",
+      "니드킹",
+      "삐삐",
+      "픽시",
+      "식스테일",
+      "나인테일",
+      "푸린",
+      "푸크린",
+      "주뱃",
+      "골뱃",
+      "뚜벅쵸",
+      "냄새꼬",
+      "라플레시아",
+      "파라스",
+      "파라섹트",
+      "콘팡",
+      "도나리",
+      "디그다",
+      "닥트리오",
+      "나옹",
+      "페르시온",
+      "고라파덕",
+      "골덕",
+      "망키",
+      "성원숭",
+      "가디",
+      "윈디",
+      "발챙이",
+      "슈륙챙이",
+      "강챙이",
+      "캐이시",
+      "윤겔라",
+      "후딘",
+      "알통몬",
+      "근육몬",
+      "괴력몬",
+      "모다피",
+      "우츠동",
+      "우츠보트",
+      "왕눈해",
+      "독파리",
+      "꼬마돌",
+      "데구리",
+      "딱구리",
+      "포니타",
+      "날쌩마",
+      "야돈",
+      "야도란",
+      "코일",
+      "레어코일",
+      "파오리",
+      "두두",
+      "두트리오",
+      "쥬쥬",
+      "쥬레곤",
+      "질퍽이",
+      "질뻐기",
+      "셀러",
+      "파르셀",
+      "고오스",
+      "고우스트",
+      "팬텀",
+      "롱스톤",
+      "슬리프",
+      "슬리퍼",
+      "크랩",
+      "킹크랩",
+      "찌리리공",
+      "붐볼",
+      "아라리",
+      "나시",
+      "탕구리",
+      "텅구리",
+      "시라소몬",
+      "홍수몬",
+      "내루미",
+      "또가스",
+      "또도가스",
+      "뿔카노",
+      "코뿌리",
+      "럭키",
+      "덩쿠리",
+      "캥카",
+      "쏘드라",
+      "시드라",
+      "콘치",
+      "왕콘치",
+      "별가사리",
+      "아쿠스타",
+      "마임맨",
+      "스라크",
+      "루주라",
+      "에레브",
+      "마그마",
+      "쁘사이저",
+      "켄타로스",
+      "잉어킹",
+      "갸라도스",
+      "라프라스",
+      "메타몽",
+      "이브이",
+      "샤미드",
+      "쥬피썬더",
+      "부스터",
+      "폴리곤",
+      "암나이트",
+      "암스타",
+      "투구",
+      "투구푸스",
+      "프테라",
+      "잠만보",
+      "프리져",
+      "썬더",
+      "파이어",
+      "미뇽",
+      "신뇽",
+      "망나뇽",
+      "뮤츠",
+      "뮤",
+      "치코리타",
+	    "베이리프",
+	    "메가니움",
+	    "브케인",
+	    "마그케인",
+	    "블레이범",
+	    "리아코",
+	    "엘리게이",
+	    "장크로다일"]
+  </script>
 </head>
 <body>
+  <div class = "top"></div>
+  <div id="root"></div>
   
+  <script>
+    let flag = false
+    let root = document.getElementById("root");
+    let cntScroll = 0
+    function pokeSet(nth,amount){
+      for(let nthIndex = nth; nthIndex < nth + amount; nthIndex++ ){
+        root.innerHTML += "<div class = 'nametag'>" + pokeName[nthIndex] + "</div>"
+        root.innerHTML += "<img src=./sprites/sprites/pokemon/" + (Number(nthIndex)+1) + ".png>"
+        console.log(nthIndex)
+      }
+    }
+    pokeSet(0,3)
+    window.addEventListener('scroll', function(){
+      console.log(window.scrollY)
+      if(window.scrollY>250){
+        window.scrollTo({ left: 0, top: 200});
+        // pokeSet(cntScroll,3)
+        cntScroll += 3
+        root.innerHTML = ""
+        console.log(cntScroll)
+        pokeSet(cntScroll,3)
+        flag =true
+      }
+      if(flag && window.scrollY<150){
+        window.scrollTo({ left: 0, top: 200});
+        // pokeSet(cntScroll,3)
+        cntScroll -= 3
+        root.innerHTML = ""
+        console.log(cntScroll)
+        pokeSet(cntScroll,3)
+        flag =true
+      }
+      if(cntScroll+3>151){
+        cntScroll = 148;
+      }else if(cntScroll-3 < 1){
+        cntScroll = 3
+      }
+      
+    });
+
+  </script>
 </body>
 </html>
