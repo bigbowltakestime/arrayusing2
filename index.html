@@ -195,7 +195,37 @@
 	    "블레이범",
 	    "리아코",
 	    "엘리게이",
-	    "장크로다일"]
+	    "장크로다일"];
+
+    // let pokestep = [3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 2, 3, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 4, 1, 2, 2, 1, 1, 3, 3, 2, 3]
+    // 개발자의 수치...
+
+    function arrsum(arr){
+      let sum = 0;
+      for(let arrindex = 0;arrindex<arr.length;arrindex++ ){
+        sum += arr[arrindex]
+      }
+    }
+    let whoIndex = 0;
+    // function whoIsYourNext(arr){
+    //   if(typeof(arr) === undefined){
+    //     console.log(arr);
+    //     console.log(whoIndex);
+    //     whoIndex = 0;
+    //     return 0;
+
+    //   }
+    //   else{
+    //     whoIndex += 1;
+    //     whoIsYourNext(arr.evolves_to[0]);
+    //   }
+    // }
+
+    fetch("https://pokeapi.co/api/v2/evolution-chain/2/")
+    .then(response => response.json())
+    .then(chainFamily => {
+      console.log(chainFamily.chain)
+    })
   </script>
 </head>
 <body>
@@ -203,9 +233,10 @@
   <div id="root"></div>
   
   <script>
-    let flag = false
+    let flag = false;
     let root = document.getElementById("root");
-    let cntScroll = 0
+    let cntScroll = 0;
+    let nowindex = 0;
     function pokeSet(nth,amount){
       for(let nthIndex = nth; nthIndex < nth + amount; nthIndex++ ){
         root.innerHTML += "<div class = 'nametag'>" + pokeName[nthIndex] + "</div>"
@@ -215,29 +246,25 @@
     }
     pokeSet(0,3)
     window.addEventListener('scroll', function(){
-      console.log(window.scrollY)
-      if(window.scrollY>250){
+      if(window.scrollY>300){
         window.scrollTo({ left: 0, top: 200});
-        // pokeSet(cntScroll,3)
-        cntScroll += 3
-        root.innerHTML = ""
-        console.log(cntScroll)
-        pokeSet(cntScroll,3)
-        flag =true
+        cntScroll += 3;
+        root.innerHTML = "";
+        pokeSet(cntScroll,3);
+        flag =true;
       }
-      if(flag && window.scrollY<150){
+      if(flag && window.scrollY<100){
         window.scrollTo({ left: 0, top: 200});
         // pokeSet(cntScroll,3)
-        cntScroll -= 3
-        root.innerHTML = ""
-        console.log(cntScroll)
-        pokeSet(cntScroll,3)
-        flag =true
+        cntScroll -= 3;
+        root.innerHTML = "";
+        console.log(cntScroll);
+        pokeSet(cntScroll,3);
       }
       if(cntScroll+3>151){
         cntScroll = 148;
       }else if(cntScroll-3 < 1){
-        cntScroll = 3
+        cntScroll = 3;
       }
       
     });
