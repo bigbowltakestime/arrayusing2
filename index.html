@@ -208,7 +208,7 @@
     }
     let whoIndex = 0;
     // function whoIsYourNext(arr){
-    //   if(typeof(arr) === undefined){
+    //   if(arr.chain[1].length === 0){
     //     console.log(arr);
     //     console.log(whoIndex);
     //     whoIndex = 0;
@@ -217,15 +217,29 @@
     //   }
     //   else{
     //     whoIndex += 1;
-    //     whoIsYourNext(arr.evolves_to[0]);
+    //     whoIsYourNext(arr[1][0]);
     //   }
     // }
-
-    fetch("https://pokeapi.co/api/v2/evolution-chain/2/")
-    .then(response => response.json())
-    .then(chainFamily => {
-      console.log(chainFamily.chain)
-    })
+    let startPoint = 0;
+    let evo = 2;
+    function checkEvo(n){
+      fetch(`https://pokeapi.co/api/v2/evolution-chain/${n + 1}/`)
+      .then(response => response.json())
+      .then(chainFamily => {
+        let checkarr = chainFamily.chain.species.url.split("/");
+        if(checkarr[checkarr.length-2]>151){
+          checkarr = chainFamily.chain.evolves_to[0].species.url.split("/")
+        }
+        let endPoint = Number(checkarr[checkarr.length-2]) - 1;
+        if(endPoint === 150){
+          endPoint = 151
+        }
+        console.log(n)
+        pokeSet(startPoint, endPoint);
+        console.log(startPoint + ": startPoint " +  endPoint + ": endPoint");
+        startPoint = Number(endPoint);
+      })
+    }
   </script>
 </head>
 <body>
@@ -235,38 +249,41 @@
   <script>
     let flag = false;
     let root = document.getElementById("root");
-    let cntScroll = 0;
+    let cntScroll = 1;
     let nowindex = 0;
-    function pokeSet(nth,amount){
-      for(let nthIndex = nth; nthIndex < nth + amount; nthIndex++ ){
-        root.innerHTML += "<div class = 'nametag'>" + pokeName[nthIndex] + "</div>"
-        root.innerHTML += "<img src=./sprites/sprites/pokemon/" + (Number(nthIndex)+1) + ".png>"
-        console.log(nthIndex)
+
+    function pokeSet(fromNth,toNth){
+      for(let nth = fromNth; nth < toNth; nth++ ){
+        root.innerHTML += "<div class = 'nametag'>" + pokeName[nth] + "</div>"
+        root.innerHTML += "<img src=./sprites/sprites/pokemon/" + (Number(nth)+1) + ".png>"
+        console.log(nth)
       }
     }
-    pokeSet(0,3)
+    checkEvo(1)
     window.addEventListener('scroll', function(){
       if(window.scrollY>300){
         window.scrollTo({ left: 0, top: 200});
-        cntScroll += 3;
+        cntScroll += 1;
         root.innerHTML = "";
-        pokeSet(cntScroll,3);
+        if(cntScroll>77){
+          pokeSet(149,151)
+        }
+        else{
+        checkEvo(cntScroll);
+        }
         flag =true;
       }
       if(flag && window.scrollY<100){
         window.scrollTo({ left: 0, top: 200});
-        // pokeSet(cntScroll,3)
-        cntScroll -= 3;
+        cntScroll -= 1;
         root.innerHTML = "";
-        console.log(cntScroll);
-        pokeSet(cntScroll,3);
+        if(cntScroll<2){
+          pokeSet(0,3)
+        }
+        else{
+          checkEvo(cntScroll);
+        }
       }
-      if(cntScroll+3>151){
-        cntScroll = 148;
-      }else if(cntScroll-3 < 1){
-        cntScroll = 3;
-      }
-      
     });
 
   </script>
